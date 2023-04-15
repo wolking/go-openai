@@ -1,7 +1,9 @@
 package openai
 
 import (
+	"fmt"
 	"net/http"
+	"net/url"
 )
 
 const (
@@ -67,4 +69,33 @@ func DefaultAzureConfig(apiKey, baseURL, engine string) ClientConfig {
 
 func (ClientConfig) String() string {
 	return "<OpenAI API ClientConfig>"
+}
+
+// UseProxyClient 使用代理
+func (c ClientConfig) UseProxyClient(proxy *http.Client) {
+	c.HTTPClient = proxy
+	return
+}
+
+// UseProxy 使用代理，指定代理地址
+func (c ClientConfig) UseProxy(proxyUrl string) {
+	proxyURL, err := url.Parse(proxyUrl)
+	if err != nil {
+		panic(err)
+	}
+
+	transport := &http.Transport{
+		Proxy: http.ProxyURL(proxyURL),
+	}
+
+	client := &http.Client{
+		Transport: transport,
+	}
+	c.HTTPClient = client
+	return
+}
+
+// UseSocket5Proxy 使用socket5代理
+func (c ClientConfig) UseSocket5Proxy(ip string, port int) {
+	c.UseProxy(fmt.Sprintf("socks5://%s:%d", ip, port))
 }
