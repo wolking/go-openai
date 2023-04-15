@@ -28,7 +28,9 @@ import (
 )
 
 func main() {
-	client := openai.NewClient("your token")
+	cfg := openai.DefaultConfig("你的api key").
+		UseSocket5Proxy("你的代理服务ip", 1080)
+	client := openai.NewClientWithConfig(cfg)
 	resp, err := client.CreateChatCompletion(
 		context.Background(),
 		openai.ChatCompletionRequest{

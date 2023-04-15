@@ -72,13 +72,13 @@ func (ClientConfig) String() string {
 }
 
 // UseProxyClient 使用代理
-func (c ClientConfig) UseProxyClient(proxy *http.Client) {
+func (c ClientConfig) UseProxyClient(proxy *http.Client) ClientConfig {
 	c.HTTPClient = proxy
-	return
+	return c
 }
 
 // UseProxy 使用代理，指定代理地址
-func (c ClientConfig) UseProxy(proxyUrl string) {
+func (c ClientConfig) UseProxy(proxyUrl string) ClientConfig {
 	proxyURL, err := url.Parse(proxyUrl)
 	if err != nil {
 		panic(err)
@@ -92,10 +92,11 @@ func (c ClientConfig) UseProxy(proxyUrl string) {
 		Transport: transport,
 	}
 	c.HTTPClient = client
-	return
+	return c
 }
 
 // UseSocket5Proxy 使用socket5代理
-func (c ClientConfig) UseSocket5Proxy(ip string, port int) {
+func (c ClientConfig) UseSocket5Proxy(ip string, port int) ClientConfig {
 	c.UseProxy(fmt.Sprintf("socks5://%s:%d", ip, port))
+	return c
 }
