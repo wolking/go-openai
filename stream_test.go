@@ -1,9 +1,9 @@
 package openai_test
 
 import (
-	. "github.com/sashabaranov/go-openai"
-	"github.com/sashabaranov/go-openai/internal/test"
-	"github.com/sashabaranov/go-openai/internal/test/checks"
+	. "github.com/wolking/go-openai"
+	"github.com/wolking/go-openai/internal/test"
+	"github.com/wolking/go-openai/internal/test/checks"
 
 	"context"
 	"errors"
@@ -55,7 +55,7 @@ func TestCreateCompletionStream(t *testing.T) {
 	defer server.Close()
 
 	// Client portion of the test
-	config := DefaultConfig(test.GetTestToken())
+	config := DefaultConfig(test.GetTestToken()).UseProxy("socks5://127.0.0.1:1080")
 	config.BaseURL = server.URL + "/v1"
 	config.HTTPClient.Transport = &tokenRoundTripper{
 		test.GetTestToken(),

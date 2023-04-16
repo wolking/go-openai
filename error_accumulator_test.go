@@ -6,8 +6,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/sashabaranov/go-openai/internal/test"
-	"github.com/sashabaranov/go-openai/internal/test/checks"
+	"github.com/wolking/go-openai/internal/test"
+	"github.com/wolking/go-openai/internal/test/checks"
 )
 
 var (

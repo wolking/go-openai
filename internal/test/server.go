@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 )
 
-const testAPI = "this-is-my-secure-token-do-not-steal!!"
+const testAPI = ""
 
 func GetTestToken() string {
 	return testAPI
